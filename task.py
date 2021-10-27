@@ -6,17 +6,17 @@ import time
 import xlsxwriter
 from RPA.PDF import PDF
 import re
+import os
 
 
 browser_lib = Selenium()
 pdf = PDF()
 workbook = xlsxwriter.Workbook('output/Agencies.xlsx')
 
-browser_lib.set_download_directory('.output')
-
 # Declare agency for detail report
 DETAIL_REPORT_AGENCY = 'Department of Defense'
-DOWNLOAD_DIRECTORY = '/home/yaroslav/Downloads/'
+# DOWNLOAD_DIRECTORY = os.path.expanduser('~') + '/Downloads/'
+DOWNLOAD_DIRECTORY = '.output/'
 URL = "https://itdashboard.gov/"
 
 
@@ -181,6 +181,7 @@ def detail_agency_report(agencies):
 
 def main():
     try:
+        browser_lib.set_download_directory('.output/')
         browser_lib.open_chrome_browser(URL)
         agencies = parse_agencies()
         write_agencies_to_excel(agencies)
